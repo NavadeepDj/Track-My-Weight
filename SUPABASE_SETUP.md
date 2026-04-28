@@ -35,7 +35,24 @@ The same SQL is also available in `supabase_schema.sql`.
 
 ## 2. Run The App With Supabase
 
-Use your project URL and anon public key:
+Use your project URL and anon public key.
+
+Recommended local `.env` file:
+
+```env
+SUPABASE_URL=https://lrwvqyhsdxsuyxcqmeua.supabase.co
+SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
+
+You can copy `.env.example` to `.env` and then paste your Supabase anon public key.
+
+Then run:
+
+```powershell
+flutter run
+```
+
+Alternative `--dart-define` run:
 
 ```powershell
 flutter run `
@@ -49,8 +66,14 @@ When configured correctly, the dashboard shows:
 Cloud sync: Supabase
 ```
 
+The app also keeps a local SQLite cache of successful Supabase reads. If internet is unavailable, it can show the last cached records on that device.
+
+Offline create/edit sync is not implemented yet. Add new records while online until the sync queue feature is added.
+
 ## Important
 
 This first Supabase setup is a shared cloud database. Anyone using the same app credentials can see the same people and weight entries.
+
+Do not put the Supabase database password, service role key, or direct Postgres connection string in `.env` for the Flutter app. Only use the anon public key.
 
 Before publishing the app publicly, add Supabase Auth and Row Level Security so each user only sees their own data.

@@ -84,10 +84,23 @@ This is private and offline-friendly, but data does not appear on other phones.
 ### Supabase Cloud
 
 If Supabase credentials are provided, the app stores data in Supabase.
-Supabase Project: Track My Weight
-Pass: TrackMyWeight1
 
-Run with:
+Create a local `.env` file:
+
+```env
+SUPABASE_URL=https://lrwvqyhsdxsuyxcqmeua.supabase.co
+SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_PUBLIC_KEY
+```
+
+You can copy `.env.example` to `.env` and then paste your Supabase anon public key.
+
+Then run:
+
+```powershell
+flutter run
+```
+
+You can also run with `--dart-define` instead of `.env`:
 
 ```powershell
 flutter run `
@@ -101,6 +114,12 @@ Create the database tables using:
 - `SUPABASE_SETUP.md`
 
 Current Supabase mode is a shared cloud database. Before public release, add Supabase Auth and Row Level Security so users only see their own records.
+
+### Offline Behavior
+
+When Supabase is enabled, successful cloud reads are cached into local SQLite. If the internet is unavailable later, the app can show the last cached people and weight entries from this device.
+
+Offline create/edit sync is not implemented yet. New records should be added when the device is online.
 
 ## Git Workflow
 
@@ -165,6 +184,7 @@ Do not commit:
 
 - `.env`
 - Supabase service role keys
+- Supabase database passwords or direct Postgres connection strings
 - Google OAuth client secret files
 - Firebase service files unless intentionally configured for the app
 - Build outputs
