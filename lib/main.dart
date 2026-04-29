@@ -7,16 +7,26 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'models/person.dart';
 import 'models/weight_entry.dart';
 import 'services/app_database.dart';
+import 'services/app_logger.dart';
 import 'services/supabase_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env', isOptional: true);
+  AppLogger.info(
+    'Environment loaded',
+    data: {'supabaseConfigured': SupabaseConfig.isConfigured},
+  );
 
   if (SupabaseConfig.isConfigured) {
+    AppLogger.info('Initializing Supabase client');
     await Supabase.initialize(
       url: SupabaseConfig.url,
       anonKey: SupabaseConfig.anonKey,
+    );
+  } else {
+    AppLogger.warning(
+      'Supabase credentials missing; using local SQLite storage',
     );
   }
 

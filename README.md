@@ -26,6 +26,7 @@ Track My Weight is a Flutter mobile app for recording people's weights over time
 - SQLite with `sqflite`
 - Supabase with `supabase_flutter`
 - Charts with `fl_chart`
+- Structured debug logs with `logger`
 
 ## Project Structure
 
@@ -70,6 +71,25 @@ Run tests:
 ```powershell
 flutter test
 ```
+
+## Debug Logging
+
+The app uses a central logger:
+
+```text
+lib/services/app_logger.dart
+```
+
+Logs are enabled in debug builds and include:
+
+- App startup and Supabase initialization
+- Local SQLite database opening
+- Supabase reads and writes
+- Local cache refreshes
+- Offline fallback from Supabase to SQLite
+- Person and weight entry create/delete operations
+
+Do not log secrets such as Supabase anon keys, service role keys, database passwords, or connection strings.
 
 ## Storage Modes
 
